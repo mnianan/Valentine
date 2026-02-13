@@ -35,12 +35,12 @@
         h1 {
             color: #d63384;
             font-size: 1.6rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .gif-container {
             width: 100%;
-            min-height: 200px;
+            min-height: 200px; /* Ensures space is reserved even if GIF loads slow */
             margin-bottom: 1.5rem;
         }
 
@@ -55,7 +55,7 @@
             align-items: center;
             gap: 20px;
             min-height: 60px;
-            position: relative;
+            position: relative; /* Essential for the jumping 'No' button */
         }
 
         button {
@@ -77,7 +77,7 @@
         #noBtn {
             background-color: #adb5bd;
             color: white;
-            position: relative;
+            position: relative; /* Keeps it visible inside the box at first */
             z-index: 4;
         }
 
@@ -85,7 +85,6 @@
             display: none !important;
         }
 
-        /* Heartbeat animation for your custom message */
         .love-text {
             color: #ff4d6d;
             font-size: 1.4rem;
@@ -104,6 +103,10 @@
     </style>
 </head>
 <body>
+
+    <audio id="celebrationMusic">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
 
     <div id="container">
         <div id="askSection">
@@ -131,25 +134,36 @@
         const yesBtn = document.getElementById('yesBtn');
         const askSection = document.getElementById('askSection');
         const celebrateSection = document.getElementById('celebrateSection');
+        const music = document.getElementById('celebrationMusic');
 
+        // Logic for the 'No' button escape
         const moveButton = () => {
+            // Once they try to click it, we switch to absolute to let it fly anywhere
             noBtn.style.position = 'absolute';
+            
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
             noBtn.style.left = `${x}px`;
             noBtn.style.top = `${y}px`;
         };
 
         noBtn.addEventListener('mouseover', moveButton);
         noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
+            e.preventDefault(); 
             moveButton();
         });
 
+        // 'Yes' Button Action
         yesBtn.addEventListener('click', () => {
             askSection.classList.add('hidden');
             celebrateSection.classList.remove('hidden');
             
+            // Audio Playback
+            music.volume = 0.5;
+            music.play().catch(error => console.log("Audio blocked by browser policy"));
+            
+            // Confetti Explosion
             confetti({
                 particleCount: 200,
                 spread: 100,
