@@ -17,8 +17,8 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.1); max-width: 400px; width: 85%; z-index: 10;
         }
         h1 { color: #d63384; font-size: 1.6rem; margin-bottom: 1.5rem; }
-        .gif-container { width: 100%; min-height: 200px; margin-bottom: 1.5rem; }
-        .gif-container img { width: 100%; border-radius: 15px; display: block; }
+        .image-container { width: 100%; margin-bottom: 1.5rem; }
+        .image-container img { width: 100%; border-radius: 15px; display: block; }
         .buttons {
             display: flex; justify-content: center; align-items: center;
             gap: 20px; min-height: 60px; position: relative;
@@ -48,8 +48,8 @@
     <div id="container">
         <div id="askSection">
             <h1>Hannah, will you be my Valentine? 🥺</h1>
-            <div class="gif-container">
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp4Zmt4Zmt4Zmt4Zmt4Zmt4Zmt4Zmt4Zmt4Zmt4Zmt4Zmt4Zmt4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/qUIm586826zUQ/giphy.gif" alt="Panda asking">
+            <div class="image-container">
+                <img src="hannah.jpg" alt="Valentine Image">
             </div>
             <div class="buttons">
                 <button id="yesBtn">Yes!</button>
@@ -59,8 +59,8 @@
 
         <div id="celebrateSection" class="hidden">
             <h1>Yay! Hannah said YES! ❤️</h1>
-            <div class="gif-container">
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp4Zmt4Zmt4Zmt4Zmt4Zmt4Zmt4Zmt4Zmt4Zmt4Zmt4Zmt4Zmt4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/143v0Z47r6TxyM/giphy.gif" alt="Happy">
+            <div class="image-container">
+                <img src="https://media.tenor.com/S67v-N9A0S0AAAAi/milk-and-mocha-bear-couple.gif" alt="Happy Celebration">
             </div>
             <div class="love-text">You're my Love ❤️</div>
         </div>
@@ -73,6 +73,7 @@
         const celebrateSection = document.getElementById('celebrateSection');
         const music = document.getElementById('celebrationMusic');
 
+        // Logic for the running 'No' button
         noBtn.addEventListener('mouseover', () => {
             noBtn.style.position = 'absolute';
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
@@ -81,10 +82,16 @@
             noBtn.style.top = y + 'px';
         });
 
+        // Yes Button logic
         yesBtn.addEventListener('click', () => {
             askSection.classList.add('hidden');
             celebrateSection.classList.remove('hidden');
-            music.play();
+            
+            // Start music
+            music.volume = 0.5;
+            music.play().catch(e => console.log("Music blocked by browser until interaction"));
+            
+            // Confetti
             confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
         });
     </script>
