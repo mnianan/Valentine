@@ -24,7 +24,7 @@
 
         #container {
             background: white;
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 25px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             max-width: 400px;
@@ -35,7 +35,7 @@
         h1 {
             color: #d63384;
             font-size: 1.6rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .gif-container {
@@ -55,6 +55,7 @@
             align-items: center;
             gap: 20px;
             min-height: 60px;
+            position: relative;
         }
 
         button {
@@ -70,17 +71,35 @@
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
+            z-index: 5;
         }
 
         #noBtn {
             background-color: #adb5bd;
             color: white;
-            /* Starts as relative so it is visible in the box */
-            position: relative; 
+            position: relative;
+            z-index: 4;
         }
 
         .hidden {
             display: none !important;
+        }
+
+        /* Heartbeat animation for your custom message */
+        .love-text {
+            color: #ff4d6d;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 15px;
+            animation: heartbeat 1.2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.1); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
         }
     </style>
 </head>
@@ -90,7 +109,7 @@
         <div id="askSection">
             <h1>Hannah, will you be my Valentine? 🥺</h1>
             <div class="gif-container">
-                <img src="https://media.tenor.com/97Xm_Yf8S9AAAAAi/bubududu-panda.gif" alt="Puppy eyes">
+                <img src="https://media.tenor.com/97Xm_Yf8S9AAAAAi/bubududu-panda.gif" alt="Panda asking">
             </div>
             <div class="buttons">
                 <button id="yesBtn">Yes!</button>
@@ -103,7 +122,7 @@
             <div class="gif-container">
                 <img src="https://media.tenor.com/S67v-N9A0S0AAAAi/milk-and-mocha-bear-couple.gif" alt="Happy">
             </div>
-            <h2 style="color: #ff4d6d;">I'm the luckiest! 😍</h2>
+            <div class="love-text">You're my Love ❤️</div>
         </div>
     </div>
 
@@ -114,7 +133,6 @@
         const celebrateSection = document.getElementById('celebrateSection');
 
         const moveButton = () => {
-            // Once interacted with, it flies around the screen
             noBtn.style.position = 'absolute';
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
@@ -133,9 +151,10 @@
             celebrateSection.classList.remove('hidden');
             
             confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 }
+                particleCount: 200,
+                spread: 100,
+                origin: { y: 0.6 },
+                colors: ['#ff4d6d', '#ffffff', '#ff758f']
             });
         });
     </script>
